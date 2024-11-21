@@ -1,48 +1,114 @@
-let playerTurn = "X";
-let player1 = "Georges";
-let player2 = "Brad";
+let player1 = null;
+let player2 = null;
 
-function updateTurnName() {
-  let playerName = "";
+const Board = (function(doc) {
+  const _defaultValues = [
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    ""
+  ];
 
-  if (playerTurn === "X") {
-    playerName = player1;
-  } else {
-    playerName = player2;
+  let _values = _defaultValues;
+  let _playerTurn = "X";
+
+  function clear() {
+    _values = _defaultValues;
   }
 
-  const turnSpan = document.querySelector(".player_turn span");
-  turnSpan.textContent = playerName;
-}
+  function updatePlayerTurn() {
+    const turnSpan = doc.querySelector(".player_turn span");
 
-function changeTurn() {
-  if (playerTurn === "X") {
-    playerTurn = "O";
-  } else {
-    playerTurn = "X";
+    if (_playerTurn === "X") {
+      turnSpan.textContent = player1?.getName() ?? "X";
+    } else {
+      turnSpan.textContent = player2?.getName() ?? "O";
+    }
   }
 
-  updateTurnName();
-}
+  function changeTurn() {
+    if (_playerTurn === "X") {
+      _playerTurn = "O";
+    } else {
+      _playerTurn = "X";
+    }
 
-function slotAssignment(e) {
-  const id = e.target.id;
-  console.log(id);
+    updatePlayerTurn();
+  }
+
+  function assignSlot(slotId) {
+    arrayId = slotId - 1;
+
+    if (_values[arrayId] !== "") {
+      return;
+    }
+
+    _values[arrayId] = _playerTurn;
+
+    const docSlot = doc.getElementById(slotId);
+    docSlot.innerText = _playerTurn;
+
+    changeTurn();
+  }
+
+  return {
+    assignSlot,
+    clear,
+    updatePlayerTurn,
+  }
+})(document);
+
+function createPlayer(playerSymbol, playerName) {
+  let _name = playerName;
+  let symbol = playerSymbol;
+  let score = 0;
+
+  function getName() {
+    return _name;
+  }
+
+  function updateName(newName) {
+    _name = newName;
+  }
+
+  return {
+    getName,
+    symbol,
+    score,
+    updateName,
+  };
 }
 
 const player1Input = document.querySelector("#player1");
 player1Input.addEventListener("change", function (e) {
-  player1 = e.target.value;
-  updateTurnName();
+  if (!player1) {
+    player1 = createPlayer("X", e.target.value);
+  } else {
+    player1.updateName(e.target.value);
+  }
+
+  Board.updatePlayerTurn();
 });
 
 const player2Input = document.querySelector("#player2");
 player2Input.addEventListener("change", function (e) {
-  player2 = e.target.value;
-  updateTurnName();
+  if (!player2) {
+    player2 = createPlayer("O", e.target.value);
+  } else {
+    player2.updateName(e.target.value);
+  }
+
+  Board.updatePlayerTurn();
 });
 
 const buttons = document.querySelectorAll(".grid button");
 buttons.forEach(button => {
-  button.addEventListener("click", slotAssignment);
+  button.addEventListener("click", (e) => {
+    Board.assignSlot(e.target.id);
+  });
 });
