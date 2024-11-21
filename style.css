@@ -46,11 +46,16 @@ main {
 
   padding-right: 20px;
 
+  outline: 5px solid #ffffff;
+  border: 3px solid #ffffff;
+
   border-radius: 10px;
   background-color: #b8b8b8;
 }
 
 .players .player p {
+  height: 100%;
+
   padding: 15px;
 
   font-size: 25px;
@@ -68,6 +73,15 @@ main {
 
 .players .player input {
   padding: 5px;
+}
+
+.players .is_turn {
+  background-color: #ffbc65;
+  outline-color: #4b9af5;
+}
+
+.players .is_turn p {
+  border-radius: 8px 0 0 8px;
 }
 
 .grid {

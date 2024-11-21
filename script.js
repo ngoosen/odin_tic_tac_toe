@@ -23,11 +23,16 @@ const Board = (function(doc) {
 
   function updatePlayerTurn() {
     const turnSpan = doc.querySelector(".player_turn span");
+    const playerDivs = doc.querySelectorAll(".player");
 
     if (_playerTurn === "X") {
       turnSpan.innerText = player1?.getName() ?? "X";
+      playerDivs[0].classList.add("is_turn");
+      playerDivs[1].classList.remove("is_turn");
     } else {
       turnSpan.innerText = player2?.getName() ?? "O";
+      playerDivs[1].classList.add("is_turn");
+      playerDivs[0].classList.remove("is_turn");
     }
   }
 
