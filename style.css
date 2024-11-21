@@ -97,3 +97,23 @@ main {
 .grid button:hover {
   cursor: pointer;
 }
+
+.actions button {
+  appearance: none;
+  border: none;
+
+  padding: 5px 15px;
+
+  border-radius: 5px;
+
+  color: #ffffff;
+  background-color: #4b9af5;
+
+  transition: all .2s;
+}
+
+.actions button:hover {
+  cursor: pointer;
+  background-color: #3a86dd;
+  transform: scale(1.05);
+}

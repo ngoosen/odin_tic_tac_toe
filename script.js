@@ -2,7 +2,8 @@ let player1 = null;
 let player2 = null;
 
 const Board = (function(doc) {
-  const _defaultValues = [
+  let _playerTurn = "X";
+  let _values = [
     "",
     "",
     "",
@@ -14,21 +15,24 @@ const Board = (function(doc) {
     ""
   ];
 
-  let _values = _defaultValues;
-  let _playerTurn = "X";
-
-  function clear() {
-    _values = _defaultValues;
-  }
-
   function updatePlayerTurn() {
     const turnSpan = doc.querySelector(".player_turn span");
 
     if (_playerTurn === "X") {
-      turnSpan.textContent = player1?.getName() ?? "X";
+      turnSpan.innerText = player1?.getName() ?? "X";
     } else {
-      turnSpan.textContent = player2?.getName() ?? "O";
+      turnSpan.innerText = player2?.getName() ?? "O";
     }
+  }
+
+  function clear() {
+    _values = ["", "", "", "", "", "", "", "", ""];
+
+    const buttons = doc.querySelectorAll(".grid button");
+    buttons.forEach(button => button.innerText = "");
+
+    _playerTurn = "X";
+    updatePlayerTurn();
   }
 
   function changeTurn() {
@@ -112,3 +116,6 @@ buttons.forEach(button => {
     Board.assignSlot(e.target.id);
   });
 });
+
+const clearBoardButton = document.getElementById("clear_board_button");
+clearBoardButton.addEventListener("click", Board.clear);
