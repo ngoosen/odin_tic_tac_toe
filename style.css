@@ -35,6 +35,7 @@ main {
 
 .players {
   display: flex;
+  flex-wrap: wrap;
   gap: 20px;
 }
 
@@ -49,10 +50,6 @@ main {
   background-color: #b8b8b8;
 }
 
-.players .player label {
-  margin: 0 10px;
-}
-
 .players .player p {
   padding: 15px;
 
@@ -63,6 +60,14 @@ main {
 
   border-radius: 10px 0 0 10px;
   background-color: #505050;
+}
+
+.players .player label {
+  margin: 0 10px;
+}
+
+.players .player input {
+  padding: 5px;
 }
 
 .grid {
