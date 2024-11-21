@@ -3,6 +3,7 @@ let player2 = null;
 
 const Board = (function(doc) {
   let _playerTurn = "X";
+  let _isPlaying = true;
   let _values = [
     "",
     "",
@@ -14,6 +15,11 @@ const Board = (function(doc) {
     "",
     ""
   ];
+
+  function displayWinner(winner) {
+    console.log(winner);
+    _isPlaying = false;
+  }
 
   function updatePlayerTurn() {
     const turnSpan = doc.querySelector(".player_turn span");
@@ -33,6 +39,8 @@ const Board = (function(doc) {
 
     _playerTurn = "X";
     updatePlayerTurn();
+
+    _isPlaying = true;
   }
 
   function changeTurn() {
@@ -45,10 +53,57 @@ const Board = (function(doc) {
     updatePlayerTurn();
   }
 
+  function checkingForWin() {
+    if (!_values.find(value => value != "")) {
+      // Array is clear
+      return;
+    }
+
+    let winner = "";
+
+    const row1 = _values.slice(0, 3);
+    const row2 = _values.slice(3, 6);
+    const row3 = _values.slice(6);
+
+    // Horizontal options
+    if (row1.join("-") === "X-X-X" || row1.join("-") === "O-O-O") {
+      winner = row1[0];
+    }
+
+    if (row2.join("-") === "X-X-X" || row2.join("-") === "O-O-O") {
+      winner = row2[0];
+    }
+
+    if (row3.join("-") === "X-X-X" || row3.join("-") === "O-O-O") {
+      winner = row3[0];
+    }
+
+    // Vertical options
+    for (let i = 0; i < 3; i++) {
+      if (row1[i] === row2[i] && row2[i] === row3[i] && row2[i] !== "") {
+        winner = row2[i];
+      }
+    }
+
+    // Diagonal options
+    if (
+      (row1[0] === row2[1] && row2[1] === row3[2]) ||
+      (row1[2] === row2[1] && row2[1] === row3[0])
+    ) {
+      winner = row2[1];
+    }
+
+    if (winner !== "") {
+      displayWinner(winner);
+    } else {
+      changeTurn();
+    }
+  }
+
   function assignSlot(slotId) {
     arrayId = slotId - 1;
 
-    if (_values[arrayId] !== "") {
+    if (!_isPlaying || _values[arrayId] !== "") {
       return;
     }
 
@@ -57,7 +112,7 @@ const Board = (function(doc) {
     const docSlot = doc.getElementById(slotId);
     docSlot.innerText = _playerTurn;
 
-    changeTurn();
+    checkingForWin();
   }
 
   return {
