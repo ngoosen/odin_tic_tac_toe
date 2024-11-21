@@ -106,7 +106,13 @@ const Board = (function(doc) {
     if (winner !== "") {
       displayWinner(winner === "X" ? (player1?.getName() ?? "X") : (player2?.getName() ?? "O"));
     } else {
-      changeTurn();
+      if (_values.find(value => value === "") === undefined) {
+        // Array is full but there is no winner
+        const turnDiv = doc.querySelector(".player_turn");
+        turnDiv.innerHTML = `<p>Tie!</p>`;
+      } else {
+        changeTurn();
+      }
     }
   }
 
