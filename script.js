@@ -17,7 +17,9 @@ const Board = (function(doc) {
   ];
 
   function displayWinner(winner) {
-    console.log(winner);
+    const turnDiv = doc.querySelector(".player_turn");
+    turnDiv.innerHTML = `<p>${winner} wins!</p>`;
+
     _isPlaying = false;
   }
 
@@ -37,6 +39,9 @@ const Board = (function(doc) {
   }
 
   function clear() {
+    const turnDiv = doc.querySelector(".player_turn");
+    turnDiv.innerHTML = `<span>${player1?.getName() ?? "X"}</span>'s turn!`;
+
     _values = ["", "", "", "", "", "", "", "", ""];
 
     const buttons = doc.querySelectorAll(".grid button");
@@ -99,7 +104,7 @@ const Board = (function(doc) {
     }
 
     if (winner !== "") {
-      displayWinner(winner);
+      displayWinner(winner === "X" ? (player1?.getName() ?? "X") : (player2?.getName() ?? "O"));
     } else {
       changeTurn();
     }
