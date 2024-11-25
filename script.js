@@ -17,8 +17,12 @@ const Board = (function(doc) {
   ];
 
   function displayWinner(winner) {
-    const turnDiv = doc.querySelector(".player_turn");
+    let turnDiv = doc.querySelector(".player_turn");
     turnDiv.innerHTML = `<p>${winner} wins!</p>`;
+
+    turnDiv = doc.querySelector(".is_turn");
+    turnDiv.classList.remove("is_turn");
+    turnDiv.classList.add("is_winner");
 
     _isPlaying = false;
   }
@@ -39,6 +43,9 @@ const Board = (function(doc) {
   }
 
   function clear() {
+    const winnerDiv = doc.querySelector(".is_winner");
+    winnerDiv.classList.remove("is_winner");
+
     const turnDiv = doc.querySelector(".player_turn");
     turnDiv.innerHTML = `<span>${player1?.getName() ?? "X"}</span>'s turn!`;
 
