@@ -138,10 +138,8 @@ const Board = (function(doc) {
   }
 })(document);
 
-function createPlayer(playerSymbol, playerName) {
+function createPlayer(playerName) {
   let _name = playerName;
-  let symbol = playerSymbol;
-  let score = 0;
 
   function getName() {
     return _name;
@@ -153,8 +151,6 @@ function createPlayer(playerSymbol, playerName) {
 
   return {
     getName,
-    symbol,
-    score,
     updateName,
   };
 }
@@ -162,7 +158,7 @@ function createPlayer(playerSymbol, playerName) {
 const player1Input = document.querySelector("#player1");
 player1Input.addEventListener("change", function (e) {
   if (!player1) {
-    player1 = createPlayer("X", e.target.value);
+    player1 = createPlayer(e.target.value);
   } else {
     player1.updateName(e.target.value);
   }
@@ -173,7 +169,7 @@ player1Input.addEventListener("change", function (e) {
 const player2Input = document.querySelector("#player2");
 player2Input.addEventListener("change", function (e) {
   if (!player2) {
-    player2 = createPlayer("O", e.target.value);
+    player2 = createPlayer(e.target.value);
   } else {
     player2.updateName(e.target.value);
   }
