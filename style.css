@@ -12,6 +12,7 @@ html {
   font-size: 16px;
 
   --board_border_size: 3px;
+  --slot_size: 70px;
 }
 
 body {
@@ -20,7 +21,7 @@ body {
 
 h1 {
   text-align: center;
-  font-size: 24px;
+  font-size: 34px;
 }
 
 main {
@@ -30,11 +31,12 @@ main {
   align-items: center;
   gap: 20px;
 
-  margin-top: 20px;
+  margin-top: 50px;
 }
 
 .players {
   display: flex;
+  justify-content: center;
   flex-wrap: wrap;
   gap: 20px;
 }
@@ -73,10 +75,12 @@ main {
 
 .players .player input {
   padding: 5px;
+  border-radius: 5px;
+  border: 1px solid #505050;
 }
 
 .players .is_turn {
-  background-color: #ffbc65;
+  background-color: #abd2ff;
   outline-color: #4b9af5;
 }
 
@@ -84,10 +88,15 @@ main {
   border-radius: 8px 0 0 8px;
 }
 
+.players .is_turn input:focus {
+  outline: 1px solid #3a86dd;
+  border: 1px solid #3a86dd;
+}
+
 .grid {
   display: grid;
-  grid-template-columns: repeat(3, 50px);
-  grid-template-rows: repeat(3, 50px);
+  grid-template-columns: repeat(3, var(--slot_size));
+  grid-template-rows: repeat(3, var(--slot_size));
   gap: var(--board_border_size);
 
   width: fit-content;
@@ -102,10 +111,10 @@ main {
   appearance: none;
   border: none;
 
-  width: 50px;
-  height: 50px;
+  width: var(--slot_size);
+  height: var(--slot_size);
 
-  font-size: 20px;
+  font-size: calc(var(--slot_size) / 2);
 }
 
 .grid button:hover {
@@ -116,9 +125,11 @@ main {
   appearance: none;
   border: none;
 
-  padding: 5px 15px;
+  padding: 10px 25px;
 
   border-radius: 5px;
+
+  font-size: 22px;
 
   color: #ffffff;
   background-color: #4b9af5;
